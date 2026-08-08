@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
-import org.apache.catalina.util.CustomObjectInputStream;
-import org.apache.tomcat.util.file.ConfigurationSource.Resource;
 import org.springframework.stereotype.Service;
 
 import com.furkansahin.accounts.constants.AccountsConstants;
@@ -38,8 +36,6 @@ public class AccountsServiceImpl implements IAccountsService{
             throw new CustomerAlreadyExistsException("Customer already registered with given mobile number " + customer.getMobileNumber());
         }
 
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setCreatedBy("Anonymous");
         Customer savedCustomer = customerRepository.save(customer);
         
         accountsRepository.save(createNewAccount(savedCustomer));
@@ -53,8 +49,6 @@ public class AccountsServiceImpl implements IAccountsService{
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("Anonymous");
         return newAccount;
     }
 
